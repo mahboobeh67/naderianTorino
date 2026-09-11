@@ -1,0 +1,73 @@
+/* ظرف اصلی مراحل استرداد */
+.container {
+  max-width: 48rem; /* معادل max-w-3xl */
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  direction: rtl;
+}
+
+/* کارت هر مرحله با افکت شناوری و هاور نرم */
+.stepCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem;
+  background-color: #ffffff;
+  border-radius: 0.875rem;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stepCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 20px -3px rgba(16, 185, 129, 0.12);
+  border-color: #d1fae5;
+}
+
+/* دایره پس‌زمینه آیکون */
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  min-width: 3rem;
+  background-color: #fef9c3; /* رنگ ملایم زرد */
+  border-radius: 9999px;
+  transition: background-color 0.2s ease;
+}
+
+.stepCard:hover .iconWrapper {
+  background-color: #fef08a;
+}
+
+/* رنگ و استایل آیکون */
+.icon {
+  color: #166534; /* سبز تیره سلامت و موفقیت */
+}
+
+/* بدنه متن و توضیحات */
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* عنوان مرحله */
+.title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.35rem;
+}
+
+/* متن راهنما */
+.description {
+  color: #4b5563;
+  font-size: 0.925rem;
+  line-height: 1.8;
+  margin: 0;
+}

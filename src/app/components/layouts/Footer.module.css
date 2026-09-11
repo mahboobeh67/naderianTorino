@@ -1,0 +1,82 @@
+.footer {
+  width: 100%;
+  border-top: 1px solid #00000033;
+  border-bottom: 1px solid #00000033;
+ 
+  direction: rtl;
+  padding: 32px 0;
+}
+
+.footerContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.footerInner {
+  width: 100%;
+  max-width: 1440px;
+  padding: 32px 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.footerBrand {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.footerBrand span {
+  font-weight: bold;
+}
+
+.standards {
+  display: flex;
+  gap: 12px;
+  margin-top: 5px;
+}
+
+.footerNav h4 {
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.footerNav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footerNav li {
+  margin-bottom: 8px;
+}
+
+.footerNav a {
+  text-decoration: none;
+  color: #282828;
+  transition: 0.2s;
+}
+
+.footerNav a:hover {
+  color: #009eca;
+}
+
+.copyRight {
+  text-align: center;
+  color: #000;
+  font-weight: 400;
+  font-size: 15px;
+  margin: 16px auto;
+}
+
+.torinoFooterLogo {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+  flex-direction: column;
+}

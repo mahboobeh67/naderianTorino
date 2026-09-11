@@ -1,0 +1,117 @@
+.container {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+  background-color: #f8f9fa;
+  direction: rtl;
+}
+
+.card {
+  width: 100%;
+  max-width: 440px;
+  background-color: #ffffff;
+  border-radius: 1.5rem;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem 2rem;
+  text-align: center;
+}
+
+/* آیکون دایره‌ای */
+.iconWrapper {
+  margin: 0 auto 1.5rem auto;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconSuccess {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+}
+
+.iconError {
+  background-color: #fee2e2;
+  color: #ef4444;
+}
+
+.svgIcon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+/* متون */
+.title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+}
+
+.titleSuccess {
+  color: #28a745;
+}
+
+.titleError {
+  color: #ef4444;
+}
+
+.description {
+  color: #6b7280;
+  font-size: 0.875rem;
+  line-height: 1.75rem;
+  margin-bottom: 2rem;
+}
+
+/* دکمه‌ها */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .actions {
+    flex-direction: row;
+  }
+}
+
+.btnPrimary {
+  background-color: #28a745;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.875rem;
+  border-radius: 0.75rem;
+  padding: 0.875rem 1.5rem;
+  flex: 1;
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out;
+  display: inline-block;
+}
+
+.btnPrimary:hover {
+  background-color: #218838;
+}
+
+.btnSecondary {
+  border: 1px solid #e5e7eb;
+  color: #374151;
+  font-weight: 700;
+  font-size: 0.875rem;
+  border-radius: 0.75rem;
+  padding: 0.875rem 1.5rem;
+  flex: 1;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+  display: inline-block;
+}
+
+.btnSecondary:hover {
+  border-color: #28a745;
+  color: #28a745;
+}

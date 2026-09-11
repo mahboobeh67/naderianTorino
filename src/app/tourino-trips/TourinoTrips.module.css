@@ -1,0 +1,232 @@
+/* TourinoTrips.module.css */
+
+:root {
+  --primary-green: #10b981;
+  --dark-green: #059669;
+  --light-green: #ecfdf5;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --white: #ffffff;
+  --bg-light: #f9fafb;
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.container {
+  width: 100%;
+  overflow-x: hidden;
+  direction: rtl;
+  font-family: inherit;
+}
+
+/* Hero Section */
+.heroSection {
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+  padding: 4rem 1rem;
+  border-radius: 1.5rem;
+  max-width: 800px;
+  margin: 1.5rem auto;
+  text-align: center;
+  color: var(--white);
+  box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.3);
+}
+
+.heroTitle {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.heroSubtitle {
+  font-size: 1.125rem;
+  max-width: 42rem;
+  margin: 0 auto 2rem;
+  opacity: 0.9;
+  font-weight: 300;
+}
+
+.heroButton {
+  background-color: var(--white);
+  color: var(--dark-green);
+  padding: 0.75rem 2.5rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  font-size: 1.125rem;
+}
+
+.heroButton:hover {
+  background-color: #f3f4f6;
+  transform: translateY(-2px);
+}
+
+/* Section Common */
+.section {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.875rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--text-main);
+}
+
+/* Services Grid */
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.serviceCard {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 1.25rem;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: var(--transition-smooth);
+}
+
+.serviceCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.iconWrapper {
+  background-color: var(--light-green);
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.serviceIcon {
+  color: var(--primary-green);
+}
+
+.serviceTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-main);
+}
+
+.serviceDesc {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Why Us Section */
+.whyUsSection {
+  background-color: var(--bg-light);
+  padding: 4rem 1.5rem;
+}
+
+.whyUsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 3rem;
+  text-align: center;
+}
+
+.whyUsItem svg {
+  color: var(--primary-green);
+  margin-bottom: 1rem;
+}
+
+/* Destinations Section */
+.destinationsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.destCard {
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  background: var(--white);
+  transition: var(--transition-smooth);
+  height: 300px;
+}
+
+.destCard:hover {
+  transform: scale(1.03);
+}
+
+.imageContainer {
+  position: relative;
+  height: 12rem; /* 192px */
+  width: 100%;
+  overflow: hidden;
+}
+
+.destImage {
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.destCard:hover .destImage {
+  transform: scale(1.1);
+}
+
+.destContent {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.destTitle {
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.destInfo {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+/* CTA Section */
+.ctaSection {
+  background: linear-gradient(to right, var(--dark-green), var(--primary-green));
+  color: var(--white);
+  padding: 3rem 2rem;
+  text-align: center;
+  border-radius: 2.5rem;
+  max-width: 720px;
+  margin: 2rem auto;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.ctaTitle {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.ctaButton {
+  background-color: var(--white);
+  color: var(--dark-green);
+  padding: 0.75rem 2rem;
+  border-radius: 1rem;
+  font-weight: 700;
+  border: none;
+  margin-top: 1.5rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.ctaButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}

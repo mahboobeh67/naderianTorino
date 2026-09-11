@@ -1,0 +1,136 @@
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  padding: 10px 16px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 30px auto;
+  direction: rtl;
+  position: relative;
+  z-index: 20;
+  border: 1px solid #e5e7eb;
+}
+
+.field {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  min-height: 48px;
+}
+
+.fieldBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: right;
+  font-size: 15px;
+  font-weight: 600;
+  color: #3d3d3d;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.fieldBtn:hover {
+  background-color: #f9fafb;
+}
+
+.icon {
+  font-size: 18px;
+}
+
+.activeText {
+  color: #1e293b;
+  font-weight: 700;
+}
+
+.placeholderText {
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.divider {
+  width: 1px;
+  height: 36px;
+  background: #e5e7eb;
+}
+
+/* دراپ‌داون انتخاب شهرها */
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  min-width: 180px;
+  z-index: 50;
+  padding: 6px;
+  list-style: none;
+  border: 1px solid #f3f4f6;
+}
+
+.dropdown li {
+  padding: 10px 14px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  transition: background 0.15s ease;
+}
+
+.dropdown li:hover {
+  background: #f0fdf4;
+  color: #28a745;
+}
+
+/* کانتینر تقویم zaman */
+.datePickerContainer {
+  width: 100%;
+}
+
+.zamanInput {
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #3d3d3d !important;
+  cursor: pointer !important;
+  width: 100% !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* دکمه جستجو */
+.searchBtn {
+  background: #28a745;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 42px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  white-space: nowrap;
+}
+
+.searchBtn:hover {
+  background: #218838;
+}
+
+.searchBtn:active {
+  transform: scale(0.98);
+}

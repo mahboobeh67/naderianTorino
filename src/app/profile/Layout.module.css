@@ -1,0 +1,65 @@
+.layout {
+  display: flex;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  background: #ffffff;
+  height: fit-content;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menuItem {
+  width: 100%;
+}
+
+.menuLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: #475569;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.menuLink:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+/* استایل تبی که در حال حاضر باز است */
+.menuLink.active {
+  background-color: #e8f5e9;
+  color: #16a34a; /* رنگ سبز تورینو */
+  font-weight: 600;
+}
+
+.menuIcon {
+  display: inline-block;
+}
+
+.content {
+  flex: 1;
+  min-width: 0; /* جلوگیری از سرریز flex */
+}
+

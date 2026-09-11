@@ -1,0 +1,213 @@
+/* Profile.module.css */
+.layoutContainer {
+  max-width: 1200px;
+  margin: 2.5rem auto;
+  padding: 0 1.5rem;
+  direction: rtl;
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  font-family: inherit;
+}
+
+/* سایدبار سمت راست */
+.sidebar {
+  width: 280px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.sidebarItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  color: #374151;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 1px solid #f3f4f6;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.sidebarItem:last-child {
+  border-bottom: none;
+}
+
+.sidebarItem.active {
+  background-color: #d1fae5; /* سبز ملایم تورینو */
+  color: #065f46;
+  font-weight: 700;
+}
+
+/* محتوای اصلی سمت چپ */
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* کارت‌های مشخصات */
+.card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  width: 1200px;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.cardTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.actionButton {
+  background: none;
+  border: none;
+  color: #0284c7; /* آبی ادیتور */
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.actionButton:hover {
+  opacity: 0.8;
+}
+
+/* شبکه نمایش دیتا ۲ در ۲ */
+.dataGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem 2.5rem;
+}
+
+.dataField {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.label {
+  color: #6b7280;
+  font-weight: 400;
+}
+
+.value {
+  color: #111827;
+  font-weight: 600;
+  direction: ltr; /* برای شماره موبایل و شبا و کارت */
+}
+
+.emptyValue {
+  color: #9ca3af;
+  font-weight: normal;
+}
+
+/* وضعیت لودینگ و ارور */
+.skeleton {
+  background: #f3f4f6;
+  height: 20px;
+  border-radius: 4px;
+  width: 80px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+/* مودال ساده برای ویرایش */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  backdrop-filter: blur(3px);
+}
+
+.modalBox {
+  background: #fff;
+  border-radius: 1.25rem;
+  padding: 2rem;
+  width: 90%;
+  max-width: 500px;
+  direction: rtl;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+}
+
+.modalTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #1f2937;
+}
+
+.formGroup {
+  margin-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.input {
+  border: 1px solid #d1d5db;
+  border-radius: 0.6rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  border-color: #10b981;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.saveBtn {
+  background-color: #10b981;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.4rem;
+  border-radius: 0.6rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancelBtn {
+  background-color: #f3f4f6;
+  color: #4b5563;
+  border: none;
+  padding: 0.6rem 1.4rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+}

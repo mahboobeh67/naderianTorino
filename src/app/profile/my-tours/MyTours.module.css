@@ -1,0 +1,161 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.tourCard {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease-in-out;
+}
+
+.tourCard:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* ردیف اول */
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.vehicleGroup {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badgeFinished {
+  background-color: #e8f8ed;
+  color: #16a34a;
+}
+
+.badgeOngoing {
+  background-color: #fef9c3;
+  color: #ca8a04;
+}
+
+/* ردیف دوم */
+.datesRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 18px;
+  font-size: 13px;
+  color: #475569;
+}
+
+.routeDate,
+.returnDate {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.divider {
+  height: 1px;
+  background-color: #f1f5f9;
+  margin: 16px 0;
+}
+
+/* ردیف سوم */
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.orderCode span {
+  font-weight: 600;
+  color: #1e293b;
+  margin-right: 4px;
+}
+
+.priceContainer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.priceValue {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0284c7;
+}
+
+.currency {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* وضعیت‌های لودینگ و خالی */
+.centerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #64748b;
+  gap: 12px;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #0284c7;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.errorText {
+  color: #ef4444;
+}
+

@@ -1,0 +1,108 @@
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 14px;
+  direction: rtl;
+}
+
+/* هدر خاکستری شبیه فیگما */
+.headerRow th {
+  background-color: #f1f5f9;
+  color: #334155;
+  font-weight: 700;
+  padding: 16px 20px;
+  font-size: 14px;
+}
+
+.headerRow th:first-child {
+  border-top-right-radius: 12px;
+}
+
+.headerRow th:last-child {
+  border-top-left-radius: 12px;
+}
+
+/* سطرهای جدول */
+.bodyRow {
+  border-bottom: 1px solid #f1f5f9;
+  transition: background-color 0.2s ease;
+}
+
+.bodyRow:last-child {
+  border-bottom: none;
+}
+
+.bodyRow:hover {
+  background-color: #f8fafc;
+}
+
+.bodyRow td {
+  padding: 18px 20px;
+  color: #1e293b;
+}
+
+.dateCell {
+  color: #475569;
+  font-size: 13px;
+}
+
+.amountCell {
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.typeCell {
+  color: #475569;
+}
+
+.orderCell {
+  color: #334155;
+  font-weight: 600;
+}
+
+/* وضعیت‌های لودینگ / خطا / خالی */
+.centerBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #64748b;
+  gap: 12px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #10b981;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.errorText {
+  color: #ef4444;
+}
+
+.emptyText {
+  color: #64748b;
+  font-size: 15px;
+}

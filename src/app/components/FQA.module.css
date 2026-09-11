@@ -1,0 +1,120 @@
+/* بخش والد اصلی با گرادیانت مدرن و لطیف */
+.pageWrapper {
+  min-height: 100vh;
+  padding: 3rem 1rem;
+  background: linear-gradient(135deg, #70cee6 0%, #e4e7ea 50%, #18c284 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  direction: rtl;
+  border-radius: 8px;
+}
+
+/* هدر و عنوان سوالات متداول */
+.headerWrapper {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.mainTitle {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+  
+}
+
+.subTitle {
+  color: #64748b;
+  font-size: 1.5rem;
+}
+
+/* باکس اصلی آکاردئون (با حالت شیشه‌ای مدرن یا Glassmorphism) */
+.container {
+  width: 100%;
+  max-width: 48rem; /* معادل max-w-3xl */
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  padding: 0.75rem;
+  
+}
+
+/* هر ردیف سوال */
+.item {
+  border-bottom: 1px solid #f1f5f9;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+/* دکمه کلیک */
+.button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1rem;
+  text-align: right;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.button:hover {
+  background-color: #f8fafc;
+}
+
+/* متن سوال */
+.questionTitle {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* آیکون فلش با انیمیشن چرخش */
+.icon {
+  color: #64748b;
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease;
+}
+
+.iconOpen {
+  transform: rotate(180deg);
+  color: #2563eb;
+}
+
+/* بدنه پاسخ با انیمیشن روان و رفع مشکل باز نشدن */
+.contentWrapper {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.35s ease-in-out, opacity 0.3s ease-in-out, padding 0.3s ease;
+  padding: 0 1rem;
+}
+
+.contentWrapperOpen {
+  max-height: 180px; /* فضای کافی برای متن پاسخ */
+  opacity: 1;
+  padding: 0 1rem 1.25rem 1rem;
+}
+
+/* متن پاسخ */
+.answerText {
+  color: #475569;
+  font-size: 0.925rem;
+  line-height: 1.8;
+  margin: 0;
+}

@@ -1,0 +1,123 @@
+/* ظرف اصلی بخش تماس با ما */
+.contactSection {
+  max-width: 72rem; /* 1152px */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 4rem 1.5rem;
+  direction: rtl;
+  font-family: inherit;
+}
+
+/* سربرگ و تیتر */
+.headerWrapper {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.descriptionBox {
+  margin-top: 1rem;
+  background: linear-gradient(135deg, #28a745, #218838);
+  font-weight: 700;
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  color: #ffffff;
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 2;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.25);
+}
+
+/* شبکه کارت‌ها */
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 2.25rem;
+  }
+
+  .cardsGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* استایل عمومی هر کارت */
+.card {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  border-color: #d1fae5;
+}
+
+/* آیکون کارت */
+.icon {
+  margin-left: auto;
+  margin-right: auto;
+  color: #28a745;
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .icon {
+  transform: scale(1.1);
+}
+
+/* عناوین داخل کارت */
+.cardTitle {
+  font-weight: 700;
+  color: #374151;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* مقادیر متنی داخل کارت */
+.cardValue {
+  color: #4b5563;
+  font-size: 0.95rem;
+  direction: ltr; /* برای تلفن و ایمیل */
+  display: inline-block;
+}
+
+.addressText {
+  color: #4b5563;
+  font-size: 0.875rem;
+  line-height: 1.8;
+  margin-top: 0.25rem;
+}
+
+/* بخش تفکیک‌شده داخل کارت آدرس */
+.dividerSection {
+  margin-top: 1.25rem;
+  border-top: 1px dashed #e5e7eb;
+  padding-top: 1.25rem;
+}
+
+.postalCode {
+  margin-top: 0.75rem;
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
