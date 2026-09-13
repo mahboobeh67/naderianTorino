@@ -1,7 +1,29 @@
-import axios from "axios";
+import axios, {
+  AxiosInstance,
+  AxiosResponse,
+  AxiosError,
+  InternalAxiosRequestConfig,
+} from "axios";
 import { getCookie, setCookie } from "../utils/cookie";
 
-const api = axios.create({
+// ساختار سفارشی برای ریکوئست‌هایی که ریترای می‌شوند
+interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
+  _retry?: boolean;
+}
+
+// ساختار پاسخ ریفرش توکن
+interface RefreshTokenResponse {
+  accessToken: string;
+  refreshToken?: string;
+}
+
+// ساختار خروجی تابع getNewTokens
+interface GetNewTokensResult {
+  response?: AxiosResponse<RefreshTokenResponse>;
+  error?: unknown;
+}
+
+const api: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   headers: {
     "Content-Type": "application/json",
@@ -9,26 +31,29 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(
-  (request) => {
+  (config: InternalAxiosRequestConfig) => {
     const accessToken = getCookie("accessToken");
     if (accessToken) {
-      request.headers["Authorization"] = `Bearer ${accessToken}`;
+      config.headers["Authorization"] = `Bearer ${accessToken}`;
     }
-    return request;
+    return config;
   },
-  (error) => {
+  (error: AxiosError) => {
     return Promise.reject(error);
   },
 );
 
 api.interceptors.response.use(
-  (response) => {
+  (response: AxiosResponse) => {
     return response;
   },
-  async (error) => {
-    const originalRequest = error.config;
+  async (error: AxiosError) => {
+    const originalRequest = error.config as CustomAxiosRequestConfig | undefined;
+    
     if (
+      error.response &&
       (error.response.status === 403 || error.response.status === 401) &&
+      originalRequest &&
       !originalRequest._retry
     ) {
       originalRequest._retry = true;
@@ -43,17 +68,17 @@ api.interceptors.response.use(
       }
     }
 
-    return Promise.reject(error.response.data);
+    return Promise.reject(error.response?.data);
   },
 );
 
 export default api;
 
-const getNewTokens = async () => {
+const getNewTokens = async (): Promise<GetNewTokensResult | undefined> => {
   const refreshToken = getCookie("refreshToken");
   if (!refreshToken) return;
   try {
-    const response = await axios.post(
+    const response = await axios.post<RefreshTokenResponse>(
       `${process.env.NEXT_PUBLIC_BASE_URL}/auth/refresh-token`,
       {
         refreshToken,
@@ -64,3 +89,4 @@ const getNewTokens = async () => {
     return { error };
   }
 };
+

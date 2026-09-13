@@ -1,43 +1,94 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import { PenSquare } from "lucide-react";
 import styles from "./Profile.module.css";
 import { UserProfile } from "../core/services/profile.service";
+
+interface BankFormData {
+  cardNumber: string;
+  iban: string;
+  accountIdentifier?: string;
+}
 
 interface Props {
   profile: UserProfile;
   onUpdate: (payload: Partial<UserProfile>) => Promise<void>;
 }
 
-export default function BankInfoCard({ profile, onUpdate }: Props) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    cardNumber: profile.cardNumber || "",
-    iban: profile.iban || "",
+export default function BankInfoCard({
+  profile,
+  onUpdate,
+}: Props): React.JSX.Element {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [submitting, setSubmitting] = useState<boolean>(false);
+
+  // استخراج امن داده‌های بانکی از payment یا ریشه پروفایل
+  const initialCardNumber =
+    profile.payment?.debitCard_code ||
+    (profile as unknown as Record<string, string>).cardNumber ||
+    "";
+  const initialIban =
+    profile.payment?.shaba_code ||
+    (profile as unknown as Record<string, string>).iban ||
+    "";
+  const initialAccount =
+    profile.payment?.accountIdentifier ||
+    (profile as unknown as Record<string, string>).accountIdentifier ||
+    "";
+
+  const [formData, setFormData] = useState<BankFormData>({
+    cardNumber: initialCardNumber,
+    iban: initialIban,
+    accountIdentifier: initialAccount,
   });
 
-  const handleOpen = () => {
+  const handleOpen = (): void => {
     setFormData({
-      cardNumber: profile.cardNumber || "",
-      iban: profile.iban || "",
+      cardNumber:
+        profile.payment?.debitCard_code ||
+        (profile as unknown as Record<string, string>).cardNumber ||
+        "",
+      iban:
+        profile.payment?.shaba_code ||
+        (profile as unknown as Record<string, string>).iban ||
+        "",
+      accountIdentifier:
+        profile.payment?.accountIdentifier ||
+        (profile as unknown as Record<string, string>).accountIdentifier ||
+        "",
     });
     setIsOpen(true);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     try {
       setSubmitting(true);
-      await onUpdate(formData);
+      // ارسال در قالب ساختار استاندارد payment به همراه فیلدهای سازگار
+      await onUpdate({
+        payment: {
+          shaba_code: formData.iban,
+          debitCard_code: formData.cardNumber,
+          accountIdentifier: formData.accountIdentifier || "",
+        },
+      });
       setIsOpen(false);
-    } catch (err) {
-      // هندلینگ خطا
+    } catch (err: unknown) {
+      console.error("خطا در به‌روزرسانی اطلاعات بانکی:", err);
     } finally {
       setSubmitting(false);
     }
   };
+
+  const displayCardNumber =
+    profile.payment?.debitCard_code ||
+    (profile as unknown as Record<string, string>).cardNumber ||
+    "—";
+  const displayIban =
+    profile.payment?.shaba_code ||
+    (profile as unknown as Record<string, string>).iban ||
+    "—";
 
   return (
     <>
@@ -57,11 +108,11 @@ export default function BankInfoCard({ profile, onUpdate }: Props) {
         <div className={styles.dataGrid}>
           <div className={styles.dataField}>
             <span className={styles.label}>شماره کارت</span>
-            <span className={styles.value}>{profile.cardNumber || "—"}</span>
+            <span className={styles.value}>{displayCardNumber}</span>
           </div>
           <div className={styles.dataField}>
             <span className={styles.label}>شماره شبا</span>
-            <span className={styles.value}>{profile.iban || "—"}</span>
+            <span className={styles.value}>{displayIban}</span>
           </div>
         </div>
       </div>
@@ -75,16 +126,21 @@ export default function BankInfoCard({ profile, onUpdate }: Props) {
                 <label className={styles.label}>شماره کارت</label>
                 <input
                   value={formData.cardNumber}
-                  onChange={(e) => setFormData({ ...formData, cardNumber: e.target.value })}
+                  onChange={(e: ChangeEvent<HTMLInputElement>): void =>
+                    setFormData({ ...formData, cardNumber: e.target.value })
+                  }
                   className={styles.input}
                   placeholder="۶۰۳۷..."
+                  maxLength={16}
                 />
               </div>
               <div className={styles.formGroup}>
                 <label className={styles.label}>شماره شبا (IBAN)</label>
                 <input
                   value={formData.iban}
-                  onChange={(e) => setFormData({ ...formData, iban: e.target.value })}
+                  onChange={(e: ChangeEvent<HTMLInputElement>): void =>
+                    setFormData({ ...formData, iban: e.target.value })
+                  }
                   className={styles.input}
                   placeholder="IR..."
                 />
@@ -93,7 +149,7 @@ export default function BankInfoCard({ profile, onUpdate }: Props) {
               <div className={styles.modalActions}>
                 <button
                   type="button"
-                  onClick={() => setIsOpen(false)}
+                  onClick={(): void => setIsOpen(false)}
                   className={styles.cancelBtn}
                   disabled={submitting}
                 >
@@ -114,3 +170,4 @@ export default function BankInfoCard({ profile, onUpdate }: Props) {
     </>
   );
 }
+

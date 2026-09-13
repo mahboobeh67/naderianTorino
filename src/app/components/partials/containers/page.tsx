@@ -1,11 +1,13 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, MouseEvent } from "react";
 import styles from "./modal.module.css";
+
 interface ContainerProps {
   children?: ReactNode;
   isOpen?: boolean;
   onClose?: () => void;
 }
-function ModalContainer({ children, isOpen, onClose }: ContainerProps) {
+
+function ModalContainer({ children, isOpen, onClose }: ContainerProps): React.JSX.Element | null {
   if (!isOpen) return null;
 
   return (
@@ -13,16 +15,14 @@ function ModalContainer({ children, isOpen, onClose }: ContainerProps) {
       <div className={styles.modalWrapper}>
         <div
           className={styles.modalBox}
-          onClick={(e) => e.stopPropagation()} 
+          onClick={(e: MouseEvent<HTMLDivElement>): void => e.stopPropagation()} 
         >
-       
           <button
             type="button"
             className={styles.closeButton}
             onClick={onClose}
             aria-label="بستن"
           >
-            
           </button>
           {children}
         </div>
@@ -32,3 +32,4 @@ function ModalContainer({ children, isOpen, onClose }: ContainerProps) {
 }
 
 export default ModalContainer;
+

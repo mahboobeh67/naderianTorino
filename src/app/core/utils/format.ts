@@ -1,18 +1,18 @@
+type VehicleType = "Bus" | "Van" | "SUV" | "Airplane" | "Train";
+
 // تبدیل عدد به فارسی
-export const toPersianNumber = (value: number | string) => {
+export const toPersianNumber = (value: number | string): string => {
   return new Intl.NumberFormat("fa-IR").format(Number(value));
 };
 
-
 // فرمت قیمت
-export const formatPrice = (price: number) => {
+export const formatPrice = (price: number): string => {
   if (!price) return "۰";
   return new Intl.NumberFormat("fa-IR").format(price);
 };
 
-
 // تبدیل تاریخ میلادی به شمسی
-export const formatDate = (date: string) => {
+export const formatDate = (date: string): string => {
   if (!date) return "";
 
   return new Intl.DateTimeFormat("fa-IR", {
@@ -22,9 +22,8 @@ export const formatDate = (date: string) => {
   }).format(new Date(date));
 };
 
-
 // تاریخ + ساعت
-export const formatDateTime = (date: string) => {
+export const formatDateTime = (date: string): string => {
   if (!date) return "";
 
   return new Intl.DateTimeFormat("fa-IR", {
@@ -32,34 +31,30 @@ export const formatDateTime = (date: string) => {
     timeStyle: "short",
   }).format(new Date(date));
 };
-export function getDuration(startDate: string, endDate: string) {
-  const start = new Date(startDate)
-  const end = new Date(endDate)
 
-  const diff = end.getTime() - start.getTime()
+// محاسبه مدت زمان (به روز)
+export function getDuration(startDate: string, endDate: string): number {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
 
-  const days = diff / (1000 * 60 * 60 * 24)
+  const diff = end.getTime() - start.getTime();
 
-  return days
+  const days = diff / (1000 * 60 * 60 * 24);
+
+  return days;
 }
-type VehicleType =
-  | "Bus"
-  | "Van"
-  | "SUV"
-  | "Airplane"
-  | "Train"
 
-export function getVehicleFa(vehicle: VehicleType) {
-
+// نگاشت نوع وسیله نقلیه به فارسی
+export function getVehicleFa(vehicle: VehicleType): string {
   const map: Record<VehicleType, string> = {
     Bus: "اتوبوس",
     Van: "ون",
     SUV: "شاسی بلند",
     Airplane: "هواپیما",
-    Train: "قطار"
-  }
+    Train: "قطار",
+  };
 
-  return map[vehicle]
+  return map[vehicle];
 }
 
 

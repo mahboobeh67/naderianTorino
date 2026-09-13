@@ -1,10 +1,27 @@
 "use client";
 
-
+import React from "react";
 import { useGetTransactions } from "../../core/services/queries";
 import styles from "./Transactions.module.css";
 
 const fa = new Intl.NumberFormat("fa-IR");
+
+export interface TransactionItem {
+  id?: string | number;
+  _id?: string;
+  amount?: number;
+  totalPrice?: number;
+  price?: number;
+  createdAt?: string;
+  date?: string;
+  orderId?: string | number;
+  orderNumber?: string | number;
+  tour?: {
+    startDate?: string;
+    [key: string]: unknown;
+  };
+  [key: string]: unknown;
+}
 
 // تبدیل تاریخ و ساعت به فرمت دقیق فیگما: «۱۴۰۲/۱۰/۱۲ - ۱۴:۲۴»
 const formatPersianDateTime = (dateStr?: string): string => {
@@ -31,8 +48,8 @@ const formatPersianDateTime = (dateStr?: string): string => {
 };
 
 // فرمت‌دهی هوشمند شماره سفارش
-const formatOrderNumber = (code: any): string => {
-  if (!code && code !== 0) return "---";
+const formatOrderNumber = (code: string | number | null | undefined): string => {
+  if (code === null || code === undefined || code === "") return "---";
   if (typeof code === "number" || (!isNaN(Number(code)) && String(code).trim() !== "")) {
     return fa.format(Number(code));
   }
@@ -41,14 +58,15 @@ const formatOrderNumber = (code: any): string => {
   return !isNaN(Number(shortCode)) ? fa.format(Number(shortCode)) : String(code);
 };
 
-function TransactionsPage() {
+function TransactionsPage(): React.JSX.Element {
   const { data, isLoading, isError } = useGetTransactions();
 
   // نرمال‌سازی دیتا از اندپوینت
-  const transactions = Array.isArray(data?.data)
-    ? data.data
-    : Array.isArray(data?.data?.data)
-    ? data.data.data
+  const rawData = data?.data;
+  const transactions: TransactionItem[] = Array.isArray(rawData)
+    ? (rawData as TransactionItem[])
+    : Array.isArray((rawData as { data?: TransactionItem[] })?.data)
+    ? ((rawData as { data?: TransactionItem[] }).data ?? [])
     : [];
 
   if (isLoading) {
@@ -88,13 +106,13 @@ function TransactionsPage() {
           </tr>
         </thead>
         <tbody>
-          {transactions.map((item: any, index: number) => {
+          {transactions.map((item: TransactionItem, index: number) => {
             const date = item?.createdAt || item?.date || item?.tour?.startDate;
             const amount = item?.amount || item?.totalPrice || item?.price || 0;
             const orderId = item?.orderId || item?.orderNumber || item?.id;
 
             return (
-              <tr key={item?.id || index} className={styles.bodyRow}>
+              <tr key={item?.id ?? item?._id ?? index} className={styles.bodyRow}>
                 <td className={styles.dateCell}>{formatPersianDateTime(date)}</td>
                 <td className={styles.amountCell}>{fa.format(amount)}</td>
                 {/* دقیقاً مطابق فیگما: ثبت نام در تور گردشگری */}

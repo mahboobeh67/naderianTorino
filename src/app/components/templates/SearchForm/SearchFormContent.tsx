@@ -1,30 +1,48 @@
 "use client";
 
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { DatePicker } from "zaman";
 import { useRouter } from "next/navigation";
 import QueryString from "qs";
-import { useGetTours } from "../../../core/services/queries";
-import { flattenObject } from "../../../core/utils/helper";
-import {useQuery} from "../../../core/hooks/query";
-import styles from "./SearchForm.module.css";
-
-
 import Image from "next/image";
 
-const CITIES = [
+import { useGetTours } from "../../../core/services/queries";
+import { flattenObject } from "../../../core/utils/helper";
+import useQuery from "../../../core/hooks/query";
+import styles from "./SearchForm.module.css";
+
+interface City {
+  id: string;
+  name: string;
+}
+
+interface SearchFormValues {
+  originId?: string;
+  destinationId?: string;
+  date?: {
+    startDate?: Date | string;
+    endDate?: Date | string;
+  };
+}
+
+interface ZamanChangeEvent {
+  from?: Date | string;
+  to?: Date | string;
+}
+
+const CITIES: City[] = [
   { id: "1", name: "تهران" },
   { id: "2", name: "سنندج" },
 ];
 
 function SearchForm() {
-  const [query, setQuery] = useState();
-  const [openOriginDropdown, setOpenOriginDropdown] = useState(false);
-  const [openDestDropdown, setOpenDestDropdown] = useState(false);
+  const [query, setQuery] = useState<Record<string, unknown> | undefined>();
+  const [openOriginDropdown, setOpenOriginDropdown] = useState<boolean>(false);
+  const [openDestDropdown, setOpenDestDropdown] = useState<boolean>(false);
 
   const router = useRouter();
-  const { handleSubmit, control, reset, setValue, watch } = useForm();
+  const { handleSubmit, control, reset, setValue, watch } = useForm<SearchFormValues>();
   const { getQuery } = useQuery();
 
   const selectedOriginId = watch("originId");
@@ -34,21 +52,22 @@ function SearchForm() {
 
   useEffect(() => {
     refetch();
-  }, [query]);
+  }, [query, refetch]);
 
   useEffect(() => {
     const originId = getQuery("originId");
     const destinationId = getQuery("destinationId");
     if (originId && destinationId) reset({ originId, destinationId });
-  }, []);
+  }, [getQuery, reset]);
 
-  const submitHandler = (data: any) => {
-    const query = QueryString.stringify(flattenObject(data));
-    router.push(`/?${query}`);
+  const submitHandler = (formData: SearchFormValues): void => {
+    const flattened = flattenObject(formData as Record<string, any>);
+    const queryString = QueryString.stringify(flattened);
+    router.push(`/?${queryString}`);
   };
 
-  const getCityName = (id: string) => {
-    return CITIES.find((city) => city.id === id)?.name;
+  const getCityName = (id: string): string | undefined => {
+    return CITIES.find((city: City) => city.id === id)?.name;
   };
 
   return (
@@ -63,7 +82,7 @@ function SearchForm() {
             setOpenDestDropdown(false);
           }}
         >
-          <Image src="/images/location.png" alt="location" width={20} height={20}/>
+          <Image src="/images/location.png" alt="location" width={20} height={20} />
           
           <span
             className={
@@ -76,7 +95,7 @@ function SearchForm() {
 
         {openOriginDropdown && (
           <ul className={styles.dropdown}>
-            {CITIES.map((city) => (
+            {CITIES.map((city: City) => (
               <li
                 key={city.id}
                 onClick={() => {
@@ -103,7 +122,7 @@ function SearchForm() {
             setOpenOriginDropdown(false);
           }}
         >
-           <Image src="/images/global-search.svg" alt="location" width={20} height={20}/>
+          <Image src="/images/global-search.svg" alt="location" width={20} height={20} />
           
           <span
             className={
@@ -116,7 +135,7 @@ function SearchForm() {
 
         {openDestDropdown && (
           <ul className={styles.dropdown}>
-            {CITIES.map((city) => (
+            {CITIES.map((city: City) => (
               <li
                 key={city.id}
                 onClick={() => {
@@ -135,8 +154,8 @@ function SearchForm() {
 
       {/* فیلد تاریخ (Zaman) */}
       <div className={styles.field}>
-         <Image src="/images/calendar.svg" alt="location" width={20} height={20}/>
-<span>تاریخ</span>
+        <Image src="/images/calendar.svg" alt="calendar" width={20} height={20} />
+        <span>تاریخ</span>
         <div className={styles.datePickerContainer}>
           <Controller
             control={control}
@@ -146,7 +165,9 @@ function SearchForm() {
                 range
                 round="x2"
                 inputClass={styles.zamanInput}
-                onChange={(e) => onChange({ startDate: e.from, endDate: e.to })}
+                onChange={(e: ZamanChangeEvent) =>
+                  onChange({ startDate: e.from, endDate: e.to })
+                }
               />
             )}
           />
@@ -162,3 +183,5 @@ function SearchForm() {
 }
 
 export default SearchForm;
+
+

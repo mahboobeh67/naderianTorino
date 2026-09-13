@@ -1,83 +1,56 @@
-// src/app/core/services/queries.ts
-import { useQuery } from "@tanstack/react-query";
-import QueryString from "qs";
+import { useQuery, type UseQueryResult } from "@tanstack/react-query";
+import type { AxiosResponse } from "axios";
+
 import api from "../config/api";
-import { Tour } from "../../types/tour"; 
+import QueryString from "qs";
 
-export interface TourFilterQuery {
-  originId?: string;
-  destinationId?: string;
-  startDate?: string;
-  endDate?: string;
-  page?: number;
-  sort?: "price" | "date";
-  [key: string]: string | number | undefined; // ایندکس‌سینچر امن برای فیلدهای اضافه
-}
+// اگر تایپ UserProfile را جای دیگری داری، همین import کن
+// import type { UserProfile } from "../services/profile.service";
 
-export const useGetUserData = () => {
-  const queryFn = async () => {
-    const res = await api.get("/user/profile");
-    return res.data;
-  };
-  const queryKey = ["user-data"];
+type ToursQuery = Record<string, unknown> | undefined;
+
+export const useGetUserData = (): UseQueryResult<AxiosResponse<any>, unknown> => {
+  const queryFn = () => api.get("/user/profile");
+  const queryKey = ["user-data"] as const;
 
   return useQuery({ queryFn, queryKey });
 };
 
-export const useGetTours = (query?: TourFilterQuery) => {
-  const queryFn = async () => {
-    const url = query && Object.keys(query).length > 0 
-      ? `/tour?${QueryString.stringify(query)}` 
-      : "/tour";
-    const res = await api.get<Tour[]>(url);
-    return res.data;
-  };
-  
-  const queryKey = ["tour", query];
+export const useGetTours = (
+  query: ToursQuery,
+): UseQueryResult<AxiosResponse<any>, unknown> => {
+  const url = "/tour?" + QueryString.stringify(query);
 
-  return useQuery({ 
-    queryFn, 
-    queryKey, 
-    enabled: true 
-  });
+  const queryFn = () => api.get(url);
+  const queryKey = ["tour"] as const;
+
+  return useQuery({ queryFn, queryKey, enabled: false });
 };
 
-export const useGetBasket = () => {
-  const queryFn = async () => {
-    const res = await api.get("/basket");
-    return res.data;
-  };
-  const queryKey = ["user-basket"];
+export const useGetBasket = (): UseQueryResult<AxiosResponse<any>, unknown> => {
+  const queryFn = () => api.get("/basket");
+  const queryKey = ["user-basket"] as const;
 
   return useQuery({ queryFn, queryKey });
 };
 
-export const useGetUserTours = () => {
-  const queryFn = async () => {
-    const res = await api.get("/user/tours");
-    return res.data;
-  };
-  const queryKey = ["user-tours"];
+export const useGetUserTours = (): UseQueryResult<AxiosResponse<any>, unknown> => {
+  const queryFn = () => api.get("/user/tours");
+  const queryKey = ["user-tours"] as const;
 
   return useQuery({ queryFn, queryKey });
 };
 
-export const useGetTransactions = () => {
-  const queryFn = async () => {
-    const res = await api.get("/user/transactions");
-    return res.data;
-  };
-  const queryKey = ["user-transactions"];
+export const useGetTransactions = (): UseQueryResult<AxiosResponse<any>, unknown> => {
+  const queryFn = () => api.get("/user/transactions");
+  const queryKey = ["user-transactions"] as const;
 
   return useQuery({ queryFn, queryKey });
 };
 
-export const useGetTourImages = () => {
-  const queryFn = async () => {
-    const res = await api.get<Tour[]>("/tour");
-    return res.data;
-  };
-  const queryKey = ["tour-images"];
+export const useGetTourImages = (): UseQueryResult<AxiosResponse<any>, unknown> => {
+  const queryFn = () => api.get("/tour");
+  const queryKey = ["tour-images"] as const;
 
   return useQuery({ queryFn, queryKey });
 };

@@ -1,19 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import { PenSquare } from "lucide-react";
 import styles from "./Profile.module.css";
 import { UserProfile } from "../core/services/profile.service";
+
+interface PersonalFormData {
+  firstName: string;
+  lastName: string;
+  nationalCode: string;
+  gender: string;
+  birthDate: string;
+}
 
 interface Props {
   profile: UserProfile;
   onUpdate: (payload: Partial<UserProfile>) => Promise<void>;
 }
 
-export default function PersonalInfoCard({ profile, onUpdate }: Props) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
+export default function PersonalInfoCard({ profile, onUpdate }: Props): React.JSX.Element {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [submitting, setSubmitting] = useState<boolean>(false);
+  const [formData, setFormData] = useState<PersonalFormData>({
     firstName: profile.firstName || "",
     lastName: profile.lastName || "",
     nationalCode: profile.nationalCode || "",
@@ -21,7 +29,7 @@ export default function PersonalInfoCard({ profile, onUpdate }: Props) {
     birthDate: profile.birthDate || "",
   });
 
-  const handleOpen = () => {
+  const handleOpen = (): void => {
     setFormData({
       firstName: profile.firstName || "",
       lastName: profile.lastName || "",
@@ -32,20 +40,20 @@ export default function PersonalInfoCard({ profile, onUpdate }: Props) {
     setIsOpen(true);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     try {
       setSubmitting(true);
       await onUpdate(formData as Partial<UserProfile>);
       setIsOpen(false);
-    } catch (err) {
+    } catch (err: unknown) {
       // هندلینگ خطا
     } finally {
       setSubmitting(false);
     }
   };
 
-  const renderGender = (gender?: string) => {
+  const renderGender = (gender?: string): string => {
     if (gender === "female") return "زن";
     if (gender === "male") return "مرد";
     if (gender === "other") return "سایر";
@@ -100,7 +108,9 @@ export default function PersonalInfoCard({ profile, onUpdate }: Props) {
                 <label className={styles.label}>نام</label>
                 <input
                   value={formData.firstName}
-                  onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                  onChange={(e: ChangeEvent<HTMLInputElement>): void =>
+                    setFormData({ ...formData, firstName: e.target.value })
+                  }
                   className={styles.input}
                   placeholder="نام"
                 />
@@ -109,7 +119,9 @@ export default function PersonalInfoCard({ profile, onUpdate }: Props) {
                 <label className={styles.label}>نام خانوادگی</label>
                 <input
                   value={formData.lastName}
-                  onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                  onChange={(e: ChangeEvent<HTMLInputElement>): void =>
+                    setFormData({ ...formData, lastName: e.target.value })
+                  }
                   className={styles.input}
                   placeholder="نام خانوادگی"
                 />
@@ -118,7 +130,9 @@ export default function PersonalInfoCard({ profile, onUpdate }: Props) {
                 <label className={styles.label}>کد ملی</label>
                 <input
                   value={formData.nationalCode}
-                  onChange={(e) => setFormData({ ...formData, nationalCode: e.target.value })}
+                  onChange={(e: ChangeEvent<HTMLInputElement>): void =>
+                    setFormData({ ...formData, nationalCode: e.target.value })
+                  }
                   className={styles.input}
                   placeholder="کد ملی ۱۰ رقمی"
                 />
@@ -127,7 +141,9 @@ export default function PersonalInfoCard({ profile, onUpdate }: Props) {
                 <label className={styles.label}>جنسیت</label>
                 <select
                   value={formData.gender}
-                  onChange={(e) => setFormData({ ...formData, gender: e.target.value as any })}
+                  onChange={(e: ChangeEvent<HTMLSelectElement>): void =>
+                    setFormData({ ...formData, gender: e.target.value })
+                  }
                   className={styles.input}
                 >
                   <option value="">انتخاب کنید</option>
@@ -140,7 +156,9 @@ export default function PersonalInfoCard({ profile, onUpdate }: Props) {
                 <label className={styles.label}>تاریخ تولد</label>
                 <input
                   value={formData.birthDate}
-                  onChange={(e) => setFormData({ ...formData, birthDate: e.target.value })}
+                  onChange={(e: ChangeEvent<HTMLInputElement>): void =>
+                    setFormData({ ...formData, birthDate: e.target.value })
+                  }
                   className={styles.input}
                   placeholder="مثال: ۱۳۸۳/۱۰/۱۷"
                 />
@@ -149,7 +167,7 @@ export default function PersonalInfoCard({ profile, onUpdate }: Props) {
               <div className={styles.modalActions}>
                 <button
                   type="button"
-                  onClick={() => setIsOpen(false)}
+                  onClick={(): void => setIsOpen(false)}
                   className={styles.cancelBtn}
                   disabled={submitting}
                 >
@@ -170,3 +188,4 @@ export default function PersonalInfoCard({ profile, onUpdate }: Props) {
     </>
   );
 }
+

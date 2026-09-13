@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import { PenSquare, Plus } from "lucide-react";
 import styles from "./Profile.module.css";
 import { UserProfile } from "../core/services/profile.service";
@@ -10,22 +10,31 @@ interface Props {
   onUpdate: (payload: Partial<UserProfile>) => Promise<void>;
 }
 
-export default function AccountInfoCard({ profile, onUpdate }: Props) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [email, setEmail] = useState(profile.email || "");
-  const [submitting, setSubmitting] = useState(false);
+export default function AccountInfoCard({ profile, onUpdate }: Props): React.JSX.Element {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>(profile.email || "");
+  const [submitting, setSubmitting] = useState<boolean>(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     try {
       setSubmitting(true);
       await onUpdate({ email });
       setIsOpen(false);
-    } catch (err) {
+    } catch (err: unknown) {
       // خطا در کامپوننت والد یا آلرت هندل می‌شود
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const handleOpenModal = (): void => {
+    setEmail(profile.email || "");
+    setIsOpen(true);
+  };
+
+  const handleCloseModal = (): void => {
+    setIsOpen(false);
   };
 
   return (
@@ -35,10 +44,7 @@ export default function AccountInfoCard({ profile, onUpdate }: Props) {
           <span className={styles.cardTitle}>اطلاعات حساب کاربری</span>
           <button
             type="button"
-            onClick={() => {
-              setEmail(profile.email || "");
-              setIsOpen(true);
-            }}
+            onClick={handleOpenModal}
             className={styles.actionButton}
           >
             {profile.email ? (
@@ -77,7 +83,7 @@ export default function AccountInfoCard({ profile, onUpdate }: Props) {
                 <input
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e: ChangeEvent<HTMLInputElement>): void => setEmail(e.target.value)}
                   className={styles.input}
                   placeholder="example@mail.com"
                   autoFocus
@@ -86,7 +92,7 @@ export default function AccountInfoCard({ profile, onUpdate }: Props) {
               <div className={styles.modalActions}>
                 <button
                   type="button"
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleCloseModal}
                   className={styles.cancelBtn}
                   disabled={submitting}
                 >
@@ -107,3 +113,4 @@ export default function AccountInfoCard({ profile, onUpdate }: Props) {
     </>
   );
 }
+

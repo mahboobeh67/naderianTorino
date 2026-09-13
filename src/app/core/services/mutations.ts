@@ -1,58 +1,80 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, UseMutationResult } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
 import api from "../config/api";
 import { setCookie } from "../utils/cookie";
 
-// --- تعریف اینترفیس‌ها (قراردادها) ---
-interface SendOtpPayload {
+// اینترفیس‌های داده‌های ورودی (Payloads)
+export interface SendOtpPayload {
   mobile: string;
 }
 
-interface CheckOtpPayload {
+export interface CheckOtpPayload {
   mobile: string;
   code: string;
 }
 
-interface AuthResponse {
+export interface AuthResponseData {
   accessToken: string;
   refreshToken: string;
+  message?: string;
+  user?: {
+    id: string;
+    mobile: string;
+  };
 }
 
-interface CheckoutPayload {
-  [key: string]: any; // یا بهتره دقيقاً فیلدهای سبد خرید رو اینجا بنویسی
+export interface CheckoutPayload {
+  [key: string]: any; // یا فیلدهای مشخص شده طبق الگوی سفارشتان
 }
 
-// --- توابع اصلاح شده ---
-
-export const useSendOtp = () => {
-  // اینجا به `data` تایپ SendOtpPayload دادیم
+// 1. هوک ارسال کد تأیید
+export const useSendOtp = (): UseMutationResult<
+  AxiosResponse<any>,
+  unknown,
+  SendOtpPayload
+> => {
   const mutationFn = (data: SendOtpPayload) => api.post("/auth/send-otp", data);
 
   return useMutation({ mutationFn });
 };
 
-export const useCheckOtp = () => {
+// 2. هوک بررسی کد تأیید و ذخیره توکن
+export const useCheckOtp = (): UseMutationResult<
+  AxiosResponse<AuthResponseData>,
+  unknown,
+  CheckOtpPayload
+> => {
   const queryClient = useQueryClient();
 
-  const mutationFn = (data: CheckOtpPayload) => api.post("/auth/check-otp", data);
+  const mutationFn = (data: CheckOtpPayload) =>
+    api.post<AuthResponseData>("/auth/check-otp", data);
 
-  // در اینجا هم داده برگشتی از سرور رو تایپ می‌کنیم
-  const onSuccess = (response: { data: AuthResponse }) => {
-    setCookie("accessToken", response?.data?.accessToken, 30);
-    setCookie("refreshToken", response?.data?.refreshToken, 365);
+  const onSuccess = (data: AxiosResponse<AuthResponseData>) => {
+    setCookie("accessToken", data?.data?.accessToken, 30);
+    setCookie("refreshToken", data?.data?.refreshToken, 365);
     queryClient.invalidateQueries({ queryKey: ["user-data"] });
   };
 
   return useMutation({ mutationFn, onSuccess });
 };
 
-export const useAddToBasket = () => {
-  // ID معمولاً string هست (برای اسلاگ) یا number
-  const mutationFn = (id: string) => api.put(`/basket/${id}`);
+// 3. هوک افزودن به سبد خرید
+export const useAddToBasket = (): UseMutationResult<
+  AxiosResponse<any>,
+  unknown,
+  string | number
+> => {
+  const mutationFn = (id: string | number) => api.put(`/basket/${id}`);
 
   return useMutation({ mutationFn });
 };
 
-export const useCheckout = () => {
+// 4. هوک ثبت سفارش / تسویه حساب
+export const useCheckout = (): UseMutationResult<
+  AxiosResponse<any>,
+  unknown,
+  CheckoutPayload
+> => {
   const mutationFn = (data: CheckoutPayload) => api.post("/order", data);
 
   return useMutation({ mutationFn });
