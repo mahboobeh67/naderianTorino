@@ -5,14 +5,12 @@ import { Controller, useForm } from "react-hook-form";
 import { DatePicker } from "zaman";
 import { useRouter } from "next/navigation";
 import QueryString from "qs";
-
 import { useGetTours } from "../../../core/services/queries";
 import { flattenObject } from "../../../core/utils/helper";
-import useQuery from "../../../core/hooks/query";
+import {useQuery} from "../../../core/hooks/query";
 import styles from "./SearchForm.module.css";
 
 
-import { FiMapPin, FiCalendar } from "react-icons/fi";
 import Image from "next/image";
 
 const CITIES = [

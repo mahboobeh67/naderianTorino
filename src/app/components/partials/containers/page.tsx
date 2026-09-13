@@ -1,6 +1,11 @@
+import React, { ReactNode } from "react";
 import styles from "./modal.module.css";
-
-function ModalContainer({ children, isOpen, onClose }) {
+interface ContainerProps {
+  children?: ReactNode;
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+function ModalContainer({ children, isOpen, onClose }: ContainerProps) {
   if (!isOpen) return null;
 
   return (

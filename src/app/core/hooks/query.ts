@@ -1,26 +1,32 @@
+// src/hooks/useQuery.ts
 import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback } from "react";
 
-const useQuery = () => {
+export const useQuery = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const params = new URLSearchParams(String(searchParams));
 
-  const addQuery = (key, value) => {
-    value = String(value);
-    params.set(key, value);
-    router.replace(`?${params}`);
-  };
+  // ایجاد یک تابع برای تولید کوئری استرینگ جدید
+  // استفاده از useCallback برای جلوگیری از رندر مجدد غیرضروری
+  const addQuery = useCallback((key: string, value: string | number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(key, String(value));
+    
+    // استفاده از replace برای جلوگیری از پر شدن History مرورگر در حین فیلتر کردن
+    router.replace(`?${params.toString()}`);
+  }, [router, searchParams]);
 
-  const removeQuery = (key) => {
+  const removeQuery = useCallback((key: string) => {
+    const params = new URLSearchParams(searchParams.toString());
     params.delete(key);
-    router.replace(`?${params}`);
-  };
+    
+    router.replace(`?${params.toString()}`);
+  }, [router, searchParams]);
 
-  const getQuery = (key) => {
-    return params.get(key);
-  };
+  const getQuery = useCallback((key: string): string | null => {
+    return searchParams.get(key);
+  }, [searchParams]);
 
   return { addQuery, removeQuery, getQuery };
 };
 
-export default useQuery;

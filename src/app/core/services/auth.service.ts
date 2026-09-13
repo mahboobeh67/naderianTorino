@@ -1,4 +1,4 @@
-import api from "";
+import api from "../config/api"; // 👈 مسیر درست، نه رشته خالی!
 
 export interface AuthResponse {
   accessToken: string;
@@ -8,20 +8,27 @@ export interface AuthResponse {
     mobile: string;
   };
 }
+
+export interface SendOtpResponse {
+  code: number;
+  message: string;
+}
+
 export const authService = {
   sendOtp(mobile: string) {
-    return api.post("/auth/send-otp", { mobile });
+    return api.post<SendOtpResponse>("/auth/send-otp", { mobile });
   },
+
   verifyOtp(mobile: string, otp: string) {
     return api.post<AuthResponse>("/auth/check-otp", {
       mobile,
-      code:otp,
+      code: otp,
     });
   },
 
-  refresh(refreshToken : string){
+  refresh(refreshToken: string) {
     return api.post<AuthResponse>("/auth/refresh-token", {
-       refreshToken,
-    })
-  }
+      refreshToken,
+    });
+  },
 };

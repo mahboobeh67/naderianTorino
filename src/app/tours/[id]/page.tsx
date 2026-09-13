@@ -26,7 +26,7 @@ function calculateDuration(start?: string, end?: string) {
 
 async function TourDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const tourData = await serverFetch(`/tour/${id}`, null, {
+  const tourData = await serverFetch(`/tour/${id}`, undefined, {
     cache: "no-store",
   });
 

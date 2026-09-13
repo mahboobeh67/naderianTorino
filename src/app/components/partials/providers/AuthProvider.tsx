@@ -1,10 +1,12 @@
 "use client";
-
+import React, { ReactNode } from "react";
 import { useGetUserData } from "../../../core/services/queries";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-
-function AuthProvider({ children }) {
+interface AuthProviderProps {
+  children: ReactNode;
+}
+function AuthProvider({ children }: AuthProviderProps) {
   const router = useRouter();
   const { isPending, data } = useGetUserData();
 
